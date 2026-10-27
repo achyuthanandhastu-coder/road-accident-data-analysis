@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Import CSV{% endblock %}
+{% block content %}
+<h1>Import accident records</h1>
+<section class="panel">
+  <p>Upload a CSV file (maximum 5 MB). The import validates each row, inserts valid rows, and reports rejected rows.</p>
+  <h2>Required columns</h2>
+  <code>accident_datetime, region, vehicle_type, severity</code>
+  <h2>Optional columns</h2>
+  <code>road_name, weather</code>
+  <p>Example date/time: <code>2026-01-15 18:30</code>. Severity must be <code>Minor</code>, <code>Serious</code>, <code>Fatal</code>, or <code>Unknown</code>.</p>
+  <form method="post" enctype="multipart/form-data" class="upload-form">
+    <input type="file" name="file" accept=".csv" required>
+    <button type="submit">Validate and import</button>
+  </form>
+  <p><a href="{{ url_for('static', filename='sample_accidents.csv') }}">Download sample CSV</a></p>
+</section>
+{% endblock %}

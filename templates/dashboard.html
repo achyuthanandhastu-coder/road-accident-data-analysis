@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · Road Accident Analysis{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div><h1>Accident overview</h1><p>Explore recorded patterns by time, location, severity, and vehicle type.</p></div>
+  <a class="button" href="{{ url_for('reports') }}">View detailed reports</a>
+</section>
+{% if data %}
+<div class="cards">
+  <article class="metric"><span>Total records</span><strong>{{ data.total|number }}</strong></article>
+  <article class="metric"><span>Fatal records</span><strong>{{ data.fatal|number }}</strong></article>
+  <article class="metric"><span>Serious records</span><strong>{{ data.serious|number }}</strong></article>
+  <article class="metric"><span>Regions recorded</span><strong>{{ data.locations|number }}</strong></article>
+</div>
+<section class="panel">
+  <h2>Accident trends</h2>
+  <div class="chart-grid">
+    <img src="{{ url_for('chart_image', chart_name='daily') }}" alt="Monthly accident count chart">
+    <img src="{{ url_for('chart_image', chart_name='severity') }}" alt="Severity distribution chart">
+    <img src="{{ url_for('chart_image', chart_name='vehicle') }}" alt="Vehicle type chart">
+  </div>
+</section>
+<div class="two-col">
+  <section class="panel">
+    <h2>Top regions by recorded count</h2>
+    {% if data.top_locations %}
+    <table><thead><tr><th>Region</th><th>Records</th></tr></thead><tbody>
+      {% for item in data.top_locations %}<tr><td>{{ item.label }}</td><td>{{ item.count }}</td></tr>{% endfor %}
+    </tbody></table>
+    {% else %}<p>No records yet. Add a record or import a CSV.</p>{% endif %}
+  </section>
+  <section class="panel">
+    <h2>Data quality: missing values</h2>
+    <table><thead><tr><th>Field</th><th>Missing</th></tr></thead><tbody>
+      {% for label, count in data.missing.items() %}<tr><td>{{ label }}</td><td>{{ count }}</td></tr>{% endfor %}
+    </tbody></table>
+    <p class="muted">This report counts missing values in required analysis fields.</p>
+  </section>
+</div>
+<p class="disclaimer">Interpretation note: these counts describe the dataset supplied. They do not establish that a location, vehicle, or time period causes accidents. Differences may reflect reporting coverage, traffic volume, and other factors.</p>
+{% else %}
+<section class="panel"><h2>Dashboard unavailable</h2><p>Check that MySQL is running and the database credentials in <code>.env</code> are correct.</p></section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,11 @@
+accident_datetime,region,road_name,vehicle_type,severity,weather
+2026-01-03 08:15,Central Region,Main Road,Motorcycle,Minor,Clear
+2026-01-03 18:40,Central Region,Ring Road,Car,Serious,Rain
+2026-01-04 21:10,North Region,Highway 4,Truck,Fatal,Fog
+2026-01-07 17:30,South Region,Market Road,Car,Minor,Clear
+2026-02-11 09:05,Central Region,Main Road,Bus,Serious,Cloudy
+2026-02-11 23:20,East Region,Bypass Road,Motorcycle,Unknown,Rain
+2026-03-18 14:00,North Region,Highway 4,Car,Minor,Clear
+2026-03-21 19:45,South Region,College Road,Motorcycle,Serious,Clear
+2026-04-02 07:50,East Region,Bypass Road,Truck,Minor,Fog
+2026-04-15 16:25,Central Region,Ring Road,Car,Fatal,Rain

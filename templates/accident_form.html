@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Add accident record{% endblock %}
+{% block content %}
+<h1>Add accident record</h1>
+<p class="muted">Do not enter names, phone numbers, registration numbers, exact home addresses, or other identifying details.</p>
+<form method="post" class="panel form-grid">
+  <label>Date and time <input type="datetime-local" name="accident_datetime" required value="{{ row.get('accident_datetime','') }}"></label>
+  <label>Region / location <input name="region" maxlength="120" required value="{{ row.get('region','') }}" placeholder="e.g. Central region"></label>
+  <label>Road name (optional) <input name="road_name" maxlength="180" value="{{ row.get('road_name','') }}"></label>
+  <label>Vehicle type <input name="vehicle_type" maxlength="80" required value="{{ row.get('vehicle_type','') }}" placeholder="e.g. Car, Motorcycle, Truck"></label>
+  <label>Severity
+    <select name="severity" required>
+      {% for level in ['Minor','Serious','Fatal','Unknown'] %}<option {% if row.get('severity','Minor') == level %}selected{% endif %}>{{ level }}</option>{% endfor %}
+    </select>
+  </label>
+  <label>Weather (optional) <input name="weather" maxlength="80" value="{{ row.get('weather','') }}" placeholder="e.g. Clear, Rain"></label>
+  <div class="form-actions"><button type="submit">Save record</button><a class="button secondary" href="{{ url_for('accidents') }}">Cancel</a></div>
+</form>
+{% endblock %}

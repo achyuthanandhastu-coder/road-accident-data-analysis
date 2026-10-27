@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<h1>Analysis reports</h1>
+{% if data %}
+<p class="muted">Reports are generated from the records currently stored in MySQL.</p>
+<section class="panel"><h2>Monthly summary</h2>
+<div class="table-wrap"><table><thead><tr><th>Month</th><th>Accidents</th><th>Serious</th><th>Fatal</th></tr></thead><tbody>
+{% for r in time_summary %}<tr><td>{{ r.period }}</td><td>{{ r.accident_count }}</td><td>{{ r.serious_count }}</td><td>{{ r.fatal_count }}</td></tr>{% else %}<tr><td colspan="4">No data.</td></tr>{% endfor %}
+</tbody></table></div></section>
+<section class="panel"><h2>Region summary (top 20)</h2>
+<div class="table-wrap"><table><thead><tr><th>Region</th><th>Accidents</th><th>Serious</th><th>Fatal</th></tr></thead><tbody>
+{% for r in location_summary %}<tr><td>{{ r.region }}</td><td>{{ r.accident_count }}</td><td>{{ r.serious_count }}</td><td>{{ r.fatal_count }}</td></tr>{% else %}<tr><td colspan="4">No data.</td></tr>{% endfor %}
+</tbody></table></div></section>
+<section class="panel"><h2>Severity distribution</h2>
+<div class="table-wrap"><table><thead><tr><th>Severity</th><th>Count</th><th>Percentage</th></tr></thead><tbody>
+{% for r in severity_summary %}<tr><td>{{ r.severity }}</td><td>{{ r.count }}</td><td>{{ r.percentage }}%</td></tr>{% else %}<tr><td colspan="3">No data.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% else %}<p>Reports are not available until the database connection is configured.</p>{% endif %}
+{% endblock %}

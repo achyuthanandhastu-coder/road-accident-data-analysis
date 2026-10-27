@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Accident records{% endblock %}
+{% block content %}
+<section class="page-heading"><div><h1>Accident records</h1><p>Showing up to 500 most recent records.</p></div><a class="button" href="{{ url_for('add_accident') }}">Add record</a></section>
+<form class="filter-form" method="get">
+  <input name="search" value="{{ search }}" placeholder="Search region, road, vehicle">
+  <select name="severity">
+    <option value="">All severity levels</option>
+    {% for level in ['Minor','Serious','Fatal','Unknown'] %}<option value="{{ level }}" {% if severity == level %}selected{% endif %}>{{ level }}</option>{% endfor %}
+  </select>
+  <button type="submit">Filter</button><a class="button secondary" href="{{ url_for('accidents') }}">Reset</a>
+</form>
+<section class="panel table-wrap">
+<table><thead><tr><th>ID</th><th>Date & time</th><th>Region</th><th>Road</th><th>Vehicle</th><th>Severity</th><th>Weather</th></tr></thead>
+<tbody>
+{% for r in records %}
+<tr><td>{{ r.accident_id }}</td><td>{{ r.accident_datetime }}</td><td>{{ r.region }}</td><td>{{ r.road_name or '—' }}</td><td>{{ r.vehicle_type }}</td><td><span class="badge {{ r.severity|lower }}">{{ r.severity }}</span></td><td>{{ r.weather or '—' }}</td></tr>
+{% else %}<tr><td colspan="7">No records found.</td></tr>{% endfor %}
+</tbody></table></section>
+{% endblock %}
